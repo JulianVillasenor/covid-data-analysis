@@ -6,9 +6,9 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 
 # Carga los datos
-data_2020 = pd.read_csv('COVID19_2020_CONFIRMADOS.csv')
-data_2021 = pd.read_csv('COVID19_2021_CONFIRMADOS.csv')
-data_2022 = pd.read_csv('COVID19_2022_CONFIRMADOS.csv')
+data_2020 = pd.read_csv('data/COVID19_2020_CONFIRMADOS.csv')
+data_2021 = pd.read_csv('data/COVID19_2021_CONFIRMADOS.csv')
+data_2022 = pd.read_csv('data/COVID19_2022_CONFIRMADOS.csv')
 
 # Unificar los datasets
 data = pd.concat([data_2020, data_2021, data_2022], ignore_index=True)
