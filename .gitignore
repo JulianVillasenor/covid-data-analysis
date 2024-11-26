@@ -1,7 +1,7 @@
 env_dashboard/
 env/
 *.csv
-
+*.ipynb
 
 
 

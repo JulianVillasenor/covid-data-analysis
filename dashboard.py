@@ -6,16 +6,25 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 
 # Carga los datos
-data_2020 = pd.read_csv('data/COVID19_2020_CONFIRMADOS.csv')
-data_2021 = pd.read_csv('data/COVID19_2021_CONFIRMADOS.csv')
-data_2022 = pd.read_csv('data/COVID19_2022_CONFIRMADOS.csv')
+df_2020 = pd.read_csv('data/COVID19_2020_CONFIRMADOS.csv')
+df_2021 = pd.read_csv('data/COVID19_2021_CONFIRMADOS.csv')
+df_2022 = pd.read_csv('data/COVID19_2022_CONFIRMADOS.csv')
+
+df_2020 = df_2020[df_2020['ENTIDAD_RES'] == 10]
+df_2021 = df_2021[df_2021['ENTIDAD_RES'] == 10]
+df_2022 = df_2022[df_2022['ENTIDAD_RES'] == 10]
+
+
+df_2020['YEAR'] = 2020
+df_2021['YEAR'] = 2021
+df_2022['YEAR'] = 2022
 
 # Unificar los datasets
-data = pd.concat([data_2020, data_2021, data_2022], ignore_index=True)
+df = pd.concat([df_2020, df_2021, df_2022], ignore_index=True)
 
 # Convertir fechas a formato datetime
-data['FECHA_SINTOMAS'] = pd.to_datetime(data['FECHA_SINTOMAS'])
-data['Año'] = data['FECHA_SINTOMAS'].dt.year
+df['FECHA_SINTOMAS'] = pd.to_datetime(df['FECHA_SINTOMAS'], errors='coerce')
+df['FECHA_DEF'] = pd.to_datetime(df['FECHA_DEF'], errors='coerce')
 
 # Inicializar la app Dash
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -23,7 +32,7 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 # Layout de la aplicación
 app.layout = dbc.Container([
     dbc.Row([
-        dbc.Col(html.H1("Dashboard COVID-19", className="text-center text-primary mb-4"))
+        dbc.Col(html.H1("Dashboard COVID-19 ", className="text-center text-primary mb-4")) 
     ]),
     dbc.Row([
         dbc.Col([
@@ -58,9 +67,9 @@ app.layout = dbc.Container([
 def update_dashboard(year):
     # Filtrar datos según el año seleccionado
     if year == 'Todos':
-        filtered_data = data
+        filtered_data = df
     else:
-        filtered_data = data[data['Año'] == int(year)]
+        filtered_data = df[df['YEAR'] == int(year)]
 
     # Calcular totales
     total_cases = len(filtered_data)
