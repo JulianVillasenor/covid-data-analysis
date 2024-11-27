@@ -21,9 +21,9 @@
     
 4. Inicializa el servidor de desarrollo:
     ```bash
-    python dashboard.py
+    streamlit run app.py
     ```
 
 ## Uso
 
-Una vez que el servidor esté en funcionamiento, dirígete a `http://127.0.0.1:8050
+Una vez que el servidor esté en funcionamiento, dirígete a `http://localhost:8501/`
