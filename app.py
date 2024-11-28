@@ -203,7 +203,9 @@ with col2:
 # *******************************************************************************
 # Diagramas circulares para las comorbilidades
 # *******************************************************************************
-# Limpieza de la columna TABAQUISMO
+
+st.subheader("Distribuciones por comorbilidad")
+
 # Limpieza global de las comorbilidades
 df['TABAQUISMO'] = df['TABAQUISMO'].replace({2: 0, 98: None})
 df['DIABETES'] = df['DIABETES'].replace({2: 0, 98: None})
@@ -220,7 +222,8 @@ def generate_pie_chart(data, column, title, labels_dict):
     return px.pie(
         values=counts.values,
         names=labels,
-        title=title
+        title=title,
+        color_discrete_sequence=px.colors.sequential.Agsunset
     )
 
 # Diccionarios de etiquetas para cada comorbilidad
@@ -229,28 +232,29 @@ labels_diabetes = {0: 'Sin Diabetes', 1: 'Con Diabetes'}
 labels_obesidad = {0: 'Sin Obesidad', 1: 'Con Obesidad'}
 labels_hipertension = {0: 'Sin Hipertensión', 1: 'Con Hipertensión'}
 
-# Diagrama circular para TABAQUISMO
-fig_tabaquismo = generate_pie_chart(filtered_df, 'TABAQUISMO', 'Distribución de Tabaquismo', labels_tabaquismo)
-st.subheader("Distribución de Tabaquismo")
-st.plotly_chart(fig_tabaquismo, use_container_width=True)
 
-# Diagrama circular para DIABETES
-fig_diabetes = generate_pie_chart(filtered_df, 'DIABETES', 'Distribución de Diabetes', labels_diabetes)
-st.subheader("Distribución de Diabetes")
-st.plotly_chart(fig_diabetes, use_container_width=True)
+# Mostrar ambos gráficos en cuatro columnas
+col1, col2, col3, col4= st.columns(4)
 
-# Diagrama circular para OBESIDAD
-fig_obesidad = generate_pie_chart(filtered_df, 'OBESIDAD', 'Distribución de Obesidad', labels_obesidad)
-st.subheader("Distribución de Obesidad")
-st.plotly_chart(fig_obesidad, use_container_width=True)
+with col1:
+    # Diagrama circular para TABAQUISMO
+    fig_tabaquismo = generate_pie_chart(filtered_df, 'TABAQUISMO', 'Tabaquismo', labels_tabaquismo)
+    st.plotly_chart(fig_tabaquismo, use_container_width=True)
 
-# Diagrama circular para HIPERTENSION
-fig_hipertension = generate_pie_chart(filtered_df, 'HIPERTENSION', 'Distribución de Hipertensión', labels_hipertension)
-st.subheader("Distribución de Hipertensión")
-st.plotly_chart(fig_hipertension, use_container_width=True)
+with col2:
+    # Diagrama circular para DIABETES
+    fig_diabetes = generate_pie_chart(filtered_df, 'DIABETES', 'Diabetes', labels_diabetes)
+    st.plotly_chart(fig_diabetes, use_container_width=True)
 
+with col3:
+    # Diagrama circular para OBESIDAD
+    fig_obesidad = generate_pie_chart(filtered_df, 'OBESIDAD', 'Obesidad', labels_obesidad)
+    st.plotly_chart(fig_obesidad, use_container_width=True)
 
-
+with col4:
+    # Diagrama circular para HIPERTENSION
+    fig_hipertension = generate_pie_chart(filtered_df, 'HIPERTENSION', 'Hipertensión', labels_hipertension)
+    st.plotly_chart(fig_hipertension, use_container_width=True)
 
 # *******************************************************************************
 # Boxplot e histogramas para la variable Edad por Sexo y por TipoPaciente
@@ -299,6 +303,9 @@ fig_boxplot_tipo_paciente.update_layout(
     xaxis=dict(tickvals=[1, 2], ticktext=['Ambulatorio', 'Hospitalizado']),
     showlegend=False  # No mostrar la leyenda
 )
+
+# Mostrar ambos gráficos en dos columnas
+col1, col2 = st.columns(2)
 
 # Mostrar graficas boxplot en dos columnas
 with col1:
