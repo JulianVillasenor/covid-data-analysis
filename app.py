@@ -204,6 +204,124 @@ with col2:
 # Diagramas circulares para las comorbilidades
 # *******************************************************************************
 
+
+
+
 # *******************************************************************************
 # Boxplot e histogramas para la variable Edad por Sexo y por TipoPaciente
 # *******************************************************************************
+
+# Boxplot para la variable Edad por Sexo
+fig_boxplot_sexo = px.box(
+    filtered_df,
+    x='SEXO',
+    y='EDAD',
+    title='Distribución de edad por sexo',
+    labels={'SEXO': 'Sexo', 'EDAD': 'Edad'},
+    category_orders={'SEXO': [1, 2]},  # Asegura que los valores de SEXO estén en orden
+    color='SEXO',
+    color_discrete_map={1: 'blue', 2: 'pink'},  # Colores personalizados para hombres y mujeres
+    boxmode='group',
+    template='plotly_white'
+)
+
+# Ajustar formato de la gráfica
+fig_boxplot_sexo.update_layout(
+    xaxis_title='Sexo',
+    yaxis_title='Edad',
+    xaxis=dict(tickvals=[1, 2], ticktext=['Hombres', 'Mujeres']),
+    showlegend=False
+)
+
+# Boxplot para la variable Edad por Tipo de Paciente
+fig_boxplot_tipo_paciente = px.box(
+    filtered_df,
+    x='TIPO_PACIENTE',
+    y='EDAD',
+    title='Distribución de Edad por Tipo de Paciente',
+    labels={'TIPO_PACIENTE': 'Tipo de Paciente', 'EDAD': 'Edad'},
+    category_orders={'TIPO_PACIENTE': [1, 2]},  # Asegura que los valores de TIPO_PACIENTE estén en orden
+    color='TIPO_PACIENTE',  # Colorear por tipo de paciente
+    color_discrete_map={1: 'orange', 2: 'green'},  # Colores personalizados para ambulatorio y hospitalizado
+    boxmode='group',  # Agrupar por categoría
+    template='plotly_white'
+)
+
+# Ajustar formato de la gráfica
+fig_boxplot_tipo_paciente.update_layout(
+    xaxis_title='Tipo de Paciente',
+    yaxis_title='Edad',
+    xaxis=dict(tickvals=[1, 2], ticktext=['Ambulatorio', 'Hospitalizado']),
+    showlegend=False  # No mostrar la leyenda
+)
+
+# Mostrar graficas boxplot en dos columnas
+with col1:
+    st.plotly_chart(fig_boxplot_sexo, use_container_width=True)
+
+with col2:
+    st.plotly_chart(fig_boxplot_tipo_paciente, use_container_width=True)
+
+# *******************************************************************************
+# Histogramas para la variable Edad por Sexo
+fig_hist_sexo = px.histogram(
+    filtered_df,
+    x='EDAD',
+    color='SEXO',
+    title='Distribución de edad por sexo',
+    labels={'SEXO': 'Sexo', 'EDAD': 'Edad'},
+    category_orders={'SEXO': [1, 2]},  # Asegura que los valores de SEXO estén en orden
+    color_discrete_map={1: 'blue', 2: 'pink'},  # Colores personalizados para hombres y mujeres
+    nbins=30,  # Número de bins en el histograma
+    template='plotly_white'
+)
+
+# Ajustar formato del histograma
+fig_hist_sexo.update_layout(
+    xaxis_title='Edad',
+    yaxis_title='Frecuencia',
+    barmode='overlay',  # Mostrar las barras superpuestas
+    xaxis=dict(range=[0, 100]),  # Rango de edad entre 0 y 100
+    legend_title='Sexo',
+    bargap=0.02
+)
+
+# Cambiar las etiquetas de la leyenda en un histograma
+fig_hist_sexo.for_each_trace(
+    lambda trace: trace.update(name="Hombres" if trace.name == '1' else "Mujeres")
+)
+
+# Histogramas para la variable Edad por Tipo de Paciente
+fig_hist_tipo_paciente = px.histogram(
+    filtered_df,
+    x='EDAD',
+    color='TIPO_PACIENTE',
+    title='Distribución de Edad por Tipo de Paciente',
+    labels={'TIPO_PACIENTE': 'Tipo de Paciente', 'EDAD': 'Edad'},
+    category_orders={'TIPO_PACIENTE': [1, 2]},  # Asegura que los valores de TIPO_PACIENTE estén en orden
+    color_discrete_map={1: 'orange', 2: 'green'},  # Colores personalizados para ambulatorio y hospitalizado
+    nbins=30,  # Número de bins en el histograma
+    template='plotly_white'
+)
+
+# Ajustar formato del histograma
+fig_hist_tipo_paciente.update_layout(
+    xaxis_title='Edad',
+    yaxis_title='Frecuencia',
+    barmode='overlay',  # Mostrar las barras superpuestas
+    xaxis=dict(range=[0, 100]),  # Rango de edad entre 0 y 100
+    legend_title='Tipo de Paciente',
+    bargap=0.02
+)
+
+# Cambiar las etiquetas de la leyenda en un histograma
+fig_hist_tipo_paciente.for_each_trace(
+    lambda trace: trace.update(name="Ambulatorio" if trace.name == '1' else "Hospitalario")
+)
+
+# Mostrar graficas histogramas en dos columnas
+with col1:
+    st.plotly_chart(fig_hist_sexo, use_container_width=True)
+
+with col2:
+    st.plotly_chart(fig_hist_tipo_paciente, use_container_width=True)
