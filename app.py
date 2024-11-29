@@ -192,18 +192,18 @@ with col2:
 st.subheader("Distribuciones por comorbilidad")
 
 # Limpieza global de las comorbilidades
-df['TABAQUISMO'] = df['TABAQUISMO'].replace({2: 0, 98: 0})  # Considerar 98 como "No Fuma"
-df['DIABETES'] = df['DIABETES'].replace({2: 0, 98: 0})      # Considerar 98 como "Sin Diabetes"
-df['OBESIDAD'] = df['OBESIDAD'].replace({2: 0, 98: 0})      # Considerar 98 como "Sin Obesidad"
-df['HIPERTENSION'] = df['HIPERTENSION'].replace({2: 0, 98: 0})  # Considerar 98 como "Sin Hipertensión"
+df['TABAQUISMO'] = df['TABAQUISMO'].replace({2: None, 98: None})  # Reemplaza 2 y 98 con None (desconocido)
+df['DIABETES'] = df['DIABETES'].replace({2: None, 98: None})
+df['OBESIDAD'] = df['OBESIDAD'].replace({2: None, 98: None})
+df['HIPERTENSION'] = df['HIPERTENSION'].replace({2: None, 98: None})
 
 # Elimina filas con valores nulos en las comorbilidades
 df = df.dropna(subset=['TABAQUISMO', 'DIABETES', 'OBESIDAD', 'HIPERTENSION'])
 
 # Función para generar diagramas circulares
 def generate_pie_chart(data, column, title, labels_dict):
-    counts = data[column].value_counts()  # Cuenta los valores 0 y 1
-    labels = [labels_dict.get(value, f"Desconocido ({value})") for value in counts.index]
+    counts = data[column].value_counts()  # Cuenta valores en la columna
+    labels = [labels_dict.get(value, "Desconocido") for value in counts.index]  # Etiqueta unificada para desconocido
     return px.pie(
         values=counts.values,
         names=labels,
