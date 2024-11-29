@@ -86,10 +86,10 @@ Una vez que el servidor esté en funcionamiento, dirígete a `http://localhost:8
 ## Python y pip
 
 ### instalar python
-   sudo apt install python3
+    sudo apt install python3
 
 ### instalar pip
-  sudo apt install python3-pip
+    sudo apt install python3-pip
 
 
 ### verificar las versiones instaladas
