@@ -3,22 +3,7 @@ import streamlit as st
 import plotly.express as px
 
 # Preparar datos
-df_2020 = pd.read_csv('data/COVID19_2020_CONFIRMADOS.csv')
-df_2021 = pd.read_csv('data/COVID19_2021_CONFIRMADOS.csv')
-df_2022 = pd.read_csv('data/COVID19_2022_CONFIRMADOS.csv')
-
-df_2020 = df_2020[df_2020['ENTIDAD_RES'] == 10]
-df_2021 = df_2021[df_2021['ENTIDAD_RES'] == 10]
-df_2022 = df_2022[df_2022['ENTIDAD_RES'] == 10]
-
-df_2020['YEAR'] = 2020
-df_2021['YEAR'] = 2021
-df_2022['YEAR'] = 2022
-
-df = pd.concat([df_2020, df_2021, df_2022], ignore_index=True)
-
-df['FECHA_SINTOMAS'] = pd.to_datetime(df['FECHA_SINTOMAS'], errors='coerce')
-df['FECHA_DEF'] = pd.to_datetime(df['FECHA_DEF'], errors='coerce')
+df = pd.read_csv('data/COVID19_CONFIRMADOS.csv')
 
 # Configurar página
 st.set_page_config(page_title="COVID-19 Data Dashboard", layout="wide")
