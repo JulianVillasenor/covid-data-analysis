@@ -26,6 +26,8 @@
 
 ## Uso
 
+Dentro del proyecto, es necesario crear un folder con el nombre de data, donde deven estar almacenados:
+COVID19_2020_CONFIRMADOS.csv, COVID19_2021_CONFIRMADOS.csv y COVID19_2022_CONFIRMADOS.csv
 Una vez que el servidor esté en funcionamiento, dirígete a `http://localhost:8501/`
 
 ## Instalación de Python y pip
