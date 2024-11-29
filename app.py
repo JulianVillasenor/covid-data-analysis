@@ -192,10 +192,10 @@ with col2:
 st.subheader("Distribuciones por comorbilidad")
 
 # Limpieza global de las comorbilidades
-df['TABAQUISMO'] = df['TABAQUISMO'].replace({2: None, 98: None})  # Reemplaza 2 y 98 con None (desconocido)
-df['DIABETES'] = df['DIABETES'].replace({2: None, 98: None})
-df['OBESIDAD'] = df['OBESIDAD'].replace({2: None, 98: None})
-df['HIPERTENSION'] = df['HIPERTENSION'].replace({2: None, 98: None})
+df['TABAQUISMO'] = df['TABAQUISMO'].replace({2: 0, 98: None})  # Reemplaza 2 y 98 con None (desconocido)
+df['DIABETES'] = df['DIABETES'].replace({2: 0, 98: None})
+df['OBESIDAD'] = df['OBESIDAD'].replace({2: 0, 98: None})
+df['HIPERTENSION'] = df['HIPERTENSION'].replace({2: 0, 98: None})
 
 # Elimina filas con valores nulos en las comorbilidades
 df = df.dropna(subset=['TABAQUISMO', 'DIABETES', 'OBESIDAD', 'HIPERTENSION'])
